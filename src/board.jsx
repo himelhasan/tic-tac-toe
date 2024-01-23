@@ -1,10 +1,7 @@
-import { useState } from "react";
 import Square from "./Square";
 
-const Board = () => {
-  const [squares, setSquares] = useState(Array(9).fill(null));
-  const [xIsNext, setXIsNext] = useState(true);
-
+// eslint-disable-next-line react/prop-types
+const Board = ({ xIsNext, squares, handlePlay }) => {
   const handleClick = (x) => {
     const nextSquare = squares.slice();
 
@@ -14,20 +11,16 @@ const Board = () => {
 
     if (xIsNext) {
       nextSquare[x] = "x";
-      setSquares(nextSquare);
-      setXIsNext(false);
     } else {
       nextSquare[x] = "o";
-      setSquares(nextSquare);
-      setXIsNext(true);
     }
+    handlePlay(nextSquare);
   };
 
   return (
-    <div className="my-20 m-auto w-[260px] grid grid-cols-3 gap-1">
+    <div className="grid grid-cols-3 gap-1">
       {squares?.map((square, index) => (
         // eslint-disable-next-line react/jsx-key
-
         <Square key={index} value={square} onSquareClick={() => handleClick(index)} />
       ))}
     </div>
